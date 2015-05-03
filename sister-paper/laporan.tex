@@ -1,0 +1,77 @@
+\documentclass[12pt,a4paper]{apa}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[bahasa]{babel}
+\usepackage{apacite}
+\threeauthors{Satrio Adityo}{Rizki}{Hamim Tohari}
+\threeaffiliations{1103120029}{1103120042}{1103124294\\S1 Teknik Informatika, Universitas Telkom}
+\title{\textbf{\textit{Opennes} dan \textit{Heterogenity}}}
+\abstract{Sistem terdistribusi melibatkan interaksi antar perangkat komputer yang otonom atau dengan kata lain komputer yang memiliki hardware dan software sendiri. Adanya interaksi antar perangkat dalam sistem terdistribusi memunculkan beberapa tantangan dalam pengembangannya. Tantangan dalam sistem terdistribusi beberapa diantaranya adalah heterogenitas dan keterbukaan.
+\\[0.1cm]	
+\emph{\textbf{Keywords :} sistem terdistribusi, tantangan, opennes, heterogenity}
+}
+\begin{document}
+	\maketitle
+	\section{Heterogenitas}
+	Sifat keberagaman merupakan karakteristik dari sistem terdistribusi. Keberagaman tersebut dapat berupa jaringan, perangkat keras komputer, sistem operasi, bahasa pemrograman, implementasi oleh pengembang yang berbeda. \cite{Coulouris2012} \cite{Belapurkar2009}
+	\subsection{Jaringan}
+	Intranet-intranet yang terhubung menjadi satu membuat jaringan semakin besar dan memiliki struktur yang beragam. Namun keberagaman tersebut tertutupi oleh Internet protocol, sehingga jaringan yang memiliki keberagaman struktur tetap dapat berkomunikasi satu dengan yang lainnya. \cite{Coulouris2012}
+	\subsection{Perangkat Keras Komputer}
+	Setiap perangkat keras yang berbeda, dapat berbeda pula cara merepresentasikan tipe data, perbedaan ini harus ditangani jika data tersebut ingin dipertukarkan antara program yang berjalan dalam perangkat keras yang berbeda. \cite{Coulouris2012}
+	\subsection{Sistem Operasi}
+	Komputer yang terhubung ke jaringan tidak hanya menjalankan satu sistem operasi yang sama. Bisa saja komputer A menjalankan sistem operasi Windows, sedangkan komputer lainnya menjalankan sistem operasi Linux. Komunikasi yang terjadi dalam jaringan dari keberagaman ini bisa ditangani oleh Internet Protocol. \cite{Coulouris2012}
+	\subsection{Bahasa Pemrograman}
+	Perbedaan bahasa pemrograman juga menyebabkan perbedaan pada representasi karakter dan struktur data. Agar dapat berkomunikasi perbedaan tersebut harus ditangani. \cite{Coulouris2012}
+	\subsection{Implementasi oleh Pengembang yang Berbeda}
+	Program yang dikembangkan oleh beberapa orang, tidak akan dapat berkomunikasi atau berjalan dengan baik. Kecuali jika dikembangkan dengan mengadopsi standard umum. Misalnya jaringan komunikasi menggunakan standard yang sama yaitu Internet Protocol.
+	\subsection{Middleware}
+	Istilah middleware berlaku untuk software layer yang menyediakan abstraksi programming untuk menutupi keberagaman jaringan, perangkat keras, sistem operasi, dan bahasa pemrograman. Kebanyakan middleware diimplementasikan di atas Internet Protocol yang mana middleware tersebut menutupi perbedaan-perbedaan yang ada. Tambahan untuk menyelesakan masalah keberagaman, middleware, menyediakan model komputasi yang seragam yang mana model tersebut digunakan oleh programmer. \cite{Coulouris2012}
+	\subsection{Keberagaman dan Mobile Code}
+	Code program yang dapat dikirimkan dari komputer ke komputer lainnya dan dapat berjalan di komputer tujuan disebut dengan istilah mobile code. Salah satu contohnya adalah Java Applet. Dewasa ini mobile code yang umum digunakan adalah javascript yang dimasukkan ke dalam aplikasi web di sisi server yang kemudian diload oleh browser di sisi client. \cite{Coulouris2012}
+	
+	Contoh implementasi keberagaman dalam sistem terdistribusi : Intranet, Internet dan mobile computing \cite{Kamalapur2008}
+	\subsubsection{Intranet}
+		Beberapa komputer di suatu ruangan yang terhubung dengan LAN dapat membentuk suatu jaringan kecil. Jika ada beberapa ruangan yang ruangan tersebut saling terhubung, maka terbentuklah jaringan yang lebih besar, yang dapat disebut intranet.
+		
+		Jumlah komputer yang terhubung bisa berbeda-beda tiap tempat, tergantung dari pihak yang terlibat dalam pembuatan jaringan. Salah satu contoh penggunaan intranet dalam sistem terdistribusi adalah jaringan lokal suatu universitas.
+		
+	\subsubsection{Internet}
+		
+		Internet bisa dikatakan sistem terdistribusi yang sangat besar. Karena setiap perangkat komputer di seluruh dunia dapat terhubung ke dalam satu jaringan yang sama. Dengan adanya Internet ini, komputer dapat digunakan untuk berkomunikasi, bertukar data dengan komputer yang lainya tanpa dibatasi oleh jarak dan waktu.
+		
+	\subsubsection{Mobile Computing}
+		
+		Kini, sudah banyak device yang dilengkapi dengan perangkat wireless yang memungkinkan user dapat terhubung ke jaringan. Seperti mobile phone, laptop, dll. Mobile computing dapat diartikan sebagai seperangkat software dan atau hardware yang terhubung ke jaringan, sehingga user dapat menggunakannya secara langsung dengan terhubung ke jaringan melalui perangkat wireless-nya.
+		
+		Akibat adanya keberagaman ini, ada permasalahan yang timbul ketika perangkat harus saling berkomunikasi. Perangkat yang terhubung dalam sistem terdistribusi sangat mungkin dibuat dengan menggunakan bahasa pemrograman yang berbeda-beda dan bahkan dibuat dengan hardware yang berbeda. Standard yang berbeda-beda ini tidak akan memungkinkan semua perangkat untuk saling berkomunikasi jika tidak dilakukan penanganan khusus.
+		
+		Untuk mengatasi masalah tersebut, dibuat suatu software, yaitu middleware. Dengan adanya middleware perangkat yang dibangun dalam jaringan, hardware, sistem operasi, dan bahasa pemrograman yang berbeda bisa saling berkomunikasi karena mampu memberikan layer abstraksi yang memungkinkan semu aplikasi berbeda berjalan di atasnya. \cite{Coulouris2012}
+	%------------------------------------------------------
+	\section{Keterbukaan}
+	Selain heterogeneity, tantangan lain dalam pengembangan sistem terdistribusi adalah bagaimana membuat sistem bisa terus dikembangkan oleh pengembang yang berbeda dan tetap berjalan sebagaimana mestinya. Hal inilah yang dimaksud dengan openness \cite{Coulouris2012}. Sesuai dengan definisi tersebut, masalah yang dikedepankan dalam openness adalah bagaimana sebuah sistem bisa dikembangkan terus-menerus oleh pengembang yang berbeda, namun tetap mampu bersesuain dengan sistem yang sudah ada. Dua hal itu lah yang menjadi tolak ukur sejauh mana sebuah sistem terdistribusi dikatakan mendukung openness. Semakin banyak layanan atau perangkat yang bisa ditambahkan tanpa mempengaruhi keberlangsungan kinerja sistem secara keseluruhan, maka sebuah sistem dikatakan memiliki tingkat openness yang tinggi. \cite{Coulouris2012}
+	
+	Ciri utama dari sistem yang mendukung openness adalah dokumentasi dan spesifikasinya dipublikasikan secara umum \cite{Kamalapur2008}. Publikasi ini memungkinkan semua pengembang untuk  mengembangakan sistem tersebut bersama-sama dan tetap bersesuaian dengan sistem yang sudah ada.
+	
+	Namun ada masalah baru yang mungkin muncul dari publikasi ini. Seperti yang dijelaskan pada isu heterogeneity, setiap pengembang memiliki karakteristik yang berbeda-beda dalam melakukan pengembangan sistem. Jika hal ini tidak ditangani, maka sistem tidak akan bisa berjalan sebagaimana mestinya. Oleh karena itu, diperlukan sebuah aturan dan syntax baku yang harus digunakan dalam pengembangan sistem \cite{Tanenbaum2007}. Misalnya saja pada jaringan komputer, digunakan format khusus yang digunakan dan harus dipatuhi oleh pengembang ketika ingin mengembangkan aplikasi yang berkomunikasi melalui jaringan. 
+	
+	Selain jaringan, openness dalam sistem terdistribusi juga bisa lihat dari pengembangan www atau yang sering dikenal dengan nama situs web. www ini dikembangkan oleh W3C (World Wide Web Consortium). Organisasi yang dibuat oleh Tim Barners-Lee pada tanggal 20 Oktober 1994 di MIT ini mengajak semua orang untuk mengembangkan standar-standar untuk www. Salah satu standarisasinya adalah tentang bahasa scripting untuk web design seperti HTML, XML, dan lain- lain. Dengan adanya dokumentasi standar yang dibuat ini, maka developer yang ingin melakukan pengembangan harus mengikuti standar tersebut. 
+	
+	Keharusan sistem terdistribusi untuk memiliki karakteristik opennes menimbulkan tantangan baru, yaitu kompleksitas sistem yang bisa jadi semakin rumit \cite{Coulouris2012}. Hal ini karena setiap developer memiliki gaya masing-masing dalam melakukan pengembangan sistem. Olehkarenanya diperlukan suatu penanganan khusus untuk menangani hal ini. Selain itu, setiap perangkat atau standar yang ditambahkan ke sistem terdistribusi yang sudah ada harus dilakukan pengecekan apakah bisa berjalan dengan baik atau tidak. \cite{Coulouris2012}
+	
+	\bibliographystyle{apacite}
+	\bibliography{laporanreferensi}
+	\newpage
+	
+	\begin{center}
+		\textbf{Kontribusi}
+	\end{center}
+	\begin{description}
+		\item[Satrio] 35\%
+		\item[Rizki] 30\%
+		\item[Hamim] 35\%
+	\end{description}
+\end{document}

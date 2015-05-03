@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper,oneside,titlepage]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{sectsty}
+\usepackage{titlesec}
+\usepackage{cite}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage[bahasa]{babel}
+\addto\captionsbahasa{\renewcommand{\bibname}{Daftar Pustaka}}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+%CHAPTER FORMAT
+\titleformat{\chapter}[display]{
+	\LARGE \bfseries\centering
+}{\chaptertitlename\ \thechapter}{5pt}{\large}
+
+%CHAPTER SPACING
+\titlespacing*{\chapter}{0pt}{30pt}{20pt}
+
+%DOCUMENT START
+\begin{document}
+	%\nocite{*}
+%==========================================================
+		%COVER
+		\begingroup
+		\thispagestyle{empty}  
+		\begin{center}
+			%TITLE
+			\LARGE{\textbf{Simulasi Sistem Penataan \emph{Wi-Fi} dengan Algoritma Genetika}}\\[0.5cm]
+			\large{Laporan Tugas Besar}\\[1cm]
+			%AUTHOR
+			\textbf{Kelompok 7\\
+			Kelompok Keahlian : SIDE}\\[2cm]
+			%LOGO
+			\includegraphics[width=0.3\linewidth]{logo}\\[2cm]
+			%UNIVERSITY
+			\textbf{Program Studi Sarjana Teknik Informatika\\
+			Fakultas Informatika\\
+			Universitas Telkom\\
+			2015}
+		\end{center}
+		\endgroup
+		\newpage
+		
+		%==========================================================
+		\setcounter{page}{1}
+		\chapter*{Abstraksi}
+			Saat ini penggunaan \emph{Wi-Fi} untuk jaringan nirkabel sudah sangat umum. Namun, peletakan pemancar terkadang kurang tepat. Sehingga, diperlukan optimasi penataan pemancar agar menghasilkan wilayah jangkauan yang optimal.
+			
+			Pada penelitian ini akan dilakukan pengukuran daya terima pemancar di Gedung B Fakultas Teknik Universitas Telkom dengan kriteria pengukuran level daya terima pada frekuensi kerja 2.4GHz. Selanjutnya akan dilakukan pemodelan sistem penataan \emph{Wi-Fi} dengan algoritma genetika berdasarkan pada data hasil pengukuran untuk memperoleh wilayah jangkauan yang optimal.
+		
+		%==========================================================
+		\chapter{Pendahuluan}
+		\section{Latar Belakang}
+		Penggunaan Wi-Fi pada jaringan lokal nirkabel sudah sangat umum. Kebutuhan untuk tetap terhubung pada jaringan lokal menuntut institusi untuk membangun infrastruktur jaringan lokal nirkabel yang optimal dari sisi jangkauan wilayah.
+		 
+		Masalah yang sering ditemukan yaitu penataan Wi-Fi yang kurang memperhatikan jangkauan wilayah optimal. Penempatan Wi-Fi yang kurang optimal akan mengakibatkan bertambahnya jumlah access point yang dibutuhkan untuk menjangkau semua wilayah yang diinginkan yang pada akhirnya berdampak pada bertambahnya biaya. 
+		
+		Algoritma genetika digunakan sebagai algoritma untuk optimasi. Hasil akhir yang didapatkan yaitu nilai fitness yang maksimum berupa wilayah jangkauan optimal, mengacu pada data level daya terima dari pemancar. Kemudian akan dilakukan simulasi untuk penataan dengan nilai fitness terbaik.
+		\section{Perumusan Masalah}
+		Dalam penelitian ini, permasalahan dirumuskan dalam bentuk pertanyaan sebagai berikut :
+		\begin{enumerate}
+			\item Bagaimanakah sistem penataan Wi-Fi yang baik agar mendapatkan wilayah jangkauan yang optimal?
+			\item Bagaimanakah menentukan sistem penataan Wi-Fi yang optimal dengan menggunakan algoritma genetika?
+		\end{enumerate}
+		\section{Tujuan}
+		\begin{enumerate}
+			\item Mengimplementasikan sistem penataan Wi-Fi yang optimal.
+			\item Mengimplementasikan dan menganalisa penerapan algoritma genetika dalam menentukan system penataan Wi-Fi.
+		\end{enumerate}
+		\section{Batasan Masalah}
+		Batasan masalah dalam simulasi ini adalah sebagai berikut :
+		\begin{enumerate}
+			\item Dengan banyaknya jenis perangkat pemancar, dalam penelitian ini digunakan TPLink TL-WR741ND 802.11b/g/n dengan antena 5dBi Omni directional.
+			\item Lokasi penelitian terbatas pada Gedung B lantai dasar di Fakultas Teknik Universitas Telkom.
+			\item Material bangunan tidak berpengaruh.
+			\item Level daya terima diukur dengan menggunakan Kismet.
+			\item Jika terdapat pemancar yang berdekatan, dipastikan bekerja pada kanal yang berbeda.
+			\item Data letak pemancar yang ada di gedung B merupakan data masukan awal pada simulasi. Data ini berupa koordinat dalam sumbu X,Y berbeda.
+			\item Solusi optimum dinilai dari daya jangkau tertinggi, terutama di titik kritis lokasi pengujian seperti square tengah, dan sepanjang koridor sekitar kelas.
+		\end{enumerate}
+		\section{Metodologi}
+		Metodologi penyelesaian masalah yang dilakukan pada tugas besar ini adalah :
+		\begin{enumerate}
+			\item Studi Literatur
+			
+			Pada tahap ini dilakukan pengumpulan materi yang digunakan menjadi dasar teori untuk memperoleh deskripsi yang lebih jelas mengenai Wi-Fi, algoritma genetika, dan propagasi gelombang radio.
+			
+			\item Pengumpulan Data
+			
+			Pada tahap ini dilakukan pengumpulan data yang akan digunakan. Data berupa letak access point (AP) yang sudah ada di gedung B Fakultas Teknik Universitas Telkom. Data tersebut kemudian direpresentasikan menjadi kromosom untuk  digunakan dalam algoritma genetika.
+			
+			\item Perancangan dan Implementasi
+			
+			Merancang dan membuat tools yang mengimplementasikan metode algoritma genetika terhadap masalah yang dihadapi menggunakan bahasa python.
+			
+			\item Pengujian dan Analisis
+			
+			Pengujian sistem adalah dengan menganalisis wilayah jangkuan dari access point dan kemudian dilakukan simulasi dengan menggunakan algoritma genetika untuk menentuka lokasi terbaik penempatan access point.
+			
+			\item Penyusunan Laporan Tugas Besar
+			
+			Pada tahap ini dilakukan penyusunan laporan tertulis sebagai dokumentasi berdasarkan penelitian yang sudah dilakukan serta melampirkan kesimpulan dan saran dari hasil penelitian.
+		\end{enumerate}
+		
+		
+		\section{Jadwal Kegiatan}
+		\newpage
+		
+		%==========================================================
+		\chapter{Landasan Teori}
+		\section{Gelombang Radio}
+		Pada komunikasi nirkabel, digunakan media transmisi gelombang radio. Propagasi akan dilakukan untuk transmisi informasi. Propagasi gelombang radio adalah perambatan gelombang radio di suatu zat perantara. Propagasi gelombang radio dikatakan ideal jika gelombang yang dipancarkan transmitter diterima langsung tanpa hambatan oleh receiver.
+		\subsection{\emph{Bandwidth}}
+		Bandwith adalah ukuran dari lebar daerah frekuensi. Jika lebar frekuensi yang digunakan oleh sebuah alat adalah 2.40 GHz sampai 2.48 GHz maka bandwith yang digunkan adalah 0.08 GHz. Semakin besar bandwith yang digunakan akan berdampak pada semakin cepat atau besar jumlah data yang dapat dikirimkan didalamnya, dengan ilustrasi semakin lebar tempat yang tersedia di ruang frekuensi, semakin banyak data dapat kita masukkan pada sebuah waktu.\cite{Hartono2011}
+		\subsection{Penyerapan Gelombang Radio}
+		Pada saat gelombang elektromagnetik menabrak sesuatu material, biasanya gelombang akan menjadi lemah atau teredam [2]. Banyak daya yang hilang akan sangat tergantung pada frekuensi yang digunakan dan tentunya material yang ditabrak. Untuk gelombang microwave, ada dua material utama yang menjadi penyerap [2], yaitu :
+		\begin{enumerate}
+			\item Metal
+			
+			Elektron bergerak bebas di metal dan siap untuk berayun oleh karenanya akan menyerap energy dari gelombang yang lewat.
+			
+			\item Air
+			
+			Gelombang microwave akan menyebabkan molekul air bergetar, yang pada prosesnya akan mengambil sebagian energi gelombang.
+		\end{enumerate}
+		Untuk kepentingan pembuatan jaringan nirkabel secara praktis, kita akan melihat metal dan air sebagai penyerap gelombang yang baik. Lapisan air merupakan penghalang gelombang microwave, kira-kira sama dengan tembok pada cahaya. Air mempunyai banyak dampak yang besar dan dalam banyak kesempatan perubahan cuaca sangat mungkin untuk membuat sambungan jaringan nirkabel menjadi putus [2].
+		
+		Ada material lain yang mempunyai efek yang lebih kompleks terhadap penyerapan gelombang radio, yaitu pohon atau kayu. Banyaknya penyerapan sangat tergantung pada jumlah air yang ada pada material yang terkena gelombang microwave [2].
+		
+		\section{\emph{Wireless Fidelity}}
+		Wireless Fidelity atau disingkat Wi-Fi adalah standar untuk jaringan lokal nirkabel. Standar ini didasari oleh spesifikasi IEEE 802.11. Spesifikasi terbaru hingga saat ini yaitu 802.11ac. Secara berturut spesifikasi yang ada saat ini yaitu 802.11 b/g/n/ac.
+		
+		Versi Wi-Fi yang paling luas dalam pasaran USA sekarang ini (berdasarkan dalam IEEE 802.11b/g) beroperasi pada 2.400 MHz sampai 2.483,50 MHz. Pembagian operasi dalam 11 channel (masing-masing 5 MHz), berpusat di frekuensi berikut [3]:
+		
+		\section{Algoritma Genetika}
+		Algoritma genetika atau genetic algorithm (GA) adalah algoritma yang dikembangkan dari proses pencarian solusi optimasi secara acak. Populasi ini akan ber-evolusi menjadi populasi yang berbeda melalui serangkaian iterasi. Pada akhir iterasi, GA mengembalikan anggota populasi yang terbaik sebagai solusi untuk problem tersebut. Pada setiap iterasi (generasi), proses evolusi yang terjadi adalah sebagai berikut:
+		\begin{enumerate}
+			\item Dua anggota populasi (parent) dipilih berdasarkan pada suatu distribusi populasi. Kedua anggota ini kemudian dikombinasikan atau dikawinkan melalui operator crossover (pindah silang) untuk menghasilkan anak (offspring).
+			
+			\item Dengan probabilitas yang rendah, anak ini akan mengalami perubahan oleh operator mutasi.
+			
+			\item Apabila anak sesuai untuk populasi tersebut, suatu skema penggantian (replacement scheme) diterapkan untuk memilih anggota populasi yang akan digantikan oleh anak.
+			
+			\item Proses ini terus berulang sampai dicapai kondisi tertentu, misalnya sampai jumlah iterasi tertentu [4].
+		\end{enumerate}
+		
+		\subsection{Reproduksi}
+		Reproduski ini merupakan proses pergantian orang tua. Ada dua mekanisme yang digunakan untuk melakukan reproduski, yaitu cross over dan mutasi. Dengan adanya reproduksi ini memungkinkan bagi setiap individu dengan nilai fitness terbaik untuk menjadi orang tua.
+		\subsection{Pindah Silang}
+		Pindah silang merupakan proses persilangan dua buah induk untuk mengahasilkan anak. Pada proses ini, titik potong pada kromosom bisa kromosom bisa dipilih lebih dari satu, semakin banyak titik potong yang dibuat, maka kualitas anak akan semakin menurun.
+		\subsection{Mutasi}
+		Mutasi merupakan proses pergantian gen dalam kromosom anak yang hilang akibat adanya pindah silang. Kejadian mutasi ini memiliki probabilitas kecil, jika dilakukan terlalu sering, maka akan menghasilkan individu yang lemah [4].
+		\subsection{\emph{Roulette Wheel}}
+		Roulette Wheel ini digunakan untuk melakukan pemilihan orang tua. Pembuatan Roulette Wheel ini berdasarkan nilai fitness tiap kromosom yang akan dipilih menjadi orang tua. Individu yang memiliki nilai fitness tertinggi akan memiliki kemungkinan untuk terpilih lebih besar.
+		\subsection{Pergantian Individu}
+		Ada dua mekanisme yang bisa dipilih untuk melakukan pergantian individu, yaitu : 
+		\begin{enumerate}
+			\item Mengganti orang tua dengan nilai fitness terkecil.
+			
+			\item Membandingkan anak dengan orang tua, jika anak memiliki nilai fitness lebih baik dibandingkan dengan orang tua, maka anak akan menggantikan orang tua dalam populasi [4].
+		\end{enumerate}
+		
+		
+		\subsection{Penghentian}
+		Ada dua mekanisme penghentian yang bisa dipilih, yaitu :	
+		\begin{enumerate}
+			\item Menentukan sebuah nilai sebagai batas iterasi.
+			
+			\item Menghitung kegagalan penggantian anggota populasi secara berturut-turut sampai jumlah tertentu.
+		\end{enumerate}
+		\newpage
+		
+		%==========================================================
+		\chapter{Perancangan Sistem}
+		\section{Gambaran Umum Sistem}
+		Pemodelan sistem dilakukan dengan posisi access point di lokasi sebenarnya. Lokasi pengambilan data akan digambarkan dalam bentuk citra tiga dimensi yang dimulai dari koordinat (0,0,0). Dengan arah pertambahan sumbu X ke kanan, arah pertambahan sumbu Y ke bawah, dan arah penambahan sumbu Z ke atas. Setelah itu, wilayah jangkauan akan divisualisasikan dengan warna hijau untuk wilayah yang mampu dijangkau, dan merah untuk yang tidak terjangkau. Kemudian, akan dilakukan pemodelan dengan algoritma genetika untuk optimasi wilayah jangkauan pemancar. Inisialisasi populasi mengacu pada posisi access point sebenarnya. Kemudian akan dicari nilai fitness berdasarkan pada wilayah jangkauan yang terbesar.
+		\subsection{Deskripsi Tahapan Proses}
+		\begin{center}
+		\begin{tikzpicture}[node distance=2.5cm]
+			\node (start) [startstop] {Mulai};
+			\node (in1) [io, below of=start] {Data Lokasi Pemancar};
+			\node (pro1) [process, below of=in1] {Membangun Solusi dengan AG};
+			\node (pro2) [process, below of=pro1] {Analisis Solusi};
+			\node (dec1) [decision, below of=pro2] {optimum?};
+			\node (out1) [io, below of=dec1] {Solusi Akhir};
+			\node (end) [startstop, below of=out1] {Selesai};
+		
+			\draw [arrow] (start) -- (in1);
+			\draw [arrow] (in1) -- (pro1);
+			\draw [arrow] (pro1) -- (pro2);
+			\draw [arrow] (pro2) -- (dec1);
+			\draw [arrow] (dec1)-| node{tidak} ([xshift=1cm]pro1.south east) |- (pro1);
+			\draw [arrow] (dec1) -- node{ya} (out1);
+			\draw [arrow] (out1) -- (end);
+		\end{tikzpicture}
+		\end{center}
+		\subsection{Data Lokasi Pemancar}
+		Data awal diambil dari lokasi pemancar yang ada di gedung B. Sesuai penjelasan sebelumnya bahwa data berupa koordinat pemancar pada sumbu (X,Y). Sehingga, digambarkan bidang dengan titik (0,0) merupakan lokasi jalan masuk dari gedung B lantai satu, dengan sumbu X positif merupakan arah timur dan sumbu Y positif merupakan arah utara.
+		
+		Dari hasil observasi, diperoleh bahwa jumlah pemancar di gedung B lantai dasar berjumlah sebelas buah. Sehingga dihasilkan data awal sebagai berikut.
+		\subsection{Membentuk Solusi dengan Algoritma Genetika}
+		Pada tahap ini dilakukan pencarian solusi dengan menggunakan algoritma genetika. Solusi dikatakan optimum jika wilayah  gedung B mampu dijangkau oleh Wi-Fi. Algoritma genetika melakukan beberapa tahapan proses dalam mencari solusi, yaitu :
+		\begin{enumerate}
+			\item Inisialisasi populasi
+			\item Evaluasi individu
+			\item Seleksi orangtua
+			\item Perkawinan
+			\item Mutasi
+		\end{enumerate}
+		\subsection{Analisis Solusi}
+		Analisis dilakukan dengan menggunakan perangkat lunak Kismet. Perangkat ini digunakan untuk mengukur level daya terima sinyal Wi-Fi sebuah device. Pengujian akan dilakukan pada lokasi terjauh pada gedung B dari lokasi access point. 
+		
+		\subsection{Solusi Akhir}
+		Solusi akhir yang masih dalam bentuk kromosom hasil dari sistem kemudian diubah menjadi koordinat sehingga bisa diimplementasikan.
+		
+		\newpage
+		
+		%==========================================================
+		\nocite{*}
+		\bibliographystyle{ieeetr}
+		\bibliography{laporanreferensi}
+\end{document}
