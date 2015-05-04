@@ -9,7 +9,7 @@
 \usepackage{apacite}
 \threeauthors{Satrio Adityo}{Rizki}{Hamim Tohari}
 \threeaffiliations{1103120029}{1103120042}{1103124294\\S1 Teknik Informatika, Universitas Telkom}
-\title{\textbf{\textit{Opennes} dan \textit{Heterogenity}}}
+\title{\textbf{\textit{Opennes} dan \textit{Heterogeneity}}}
 \abstract{Sistem terdistribusi melibatkan interaksi antar perangkat komputer yang otonom atau perangkat yang saling terhubung dan saling koordinasi. Adanya interaksi antar perangkat dalam sistem terdistribusi memunculkan beberapa tantangan dalam pengembangannya. Tantangan dalam sistem terdistribusi diantaranya adalah heterogenitas dan keterbukaan.
 \\[0.1cm]	
 \emph{\textbf{Keywords :} sistem terdistribusi, tantangan, opennes, heterogeneity}
@@ -35,6 +35,13 @@
 	
 	Contoh implementasi keberagaman dalam sistem terdistribusi : Intranet, Internet dan mobile computing \cite{Kamalapur2008}
 	\subsubsection{\textbf{Intranet}}
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{img/heteroLAN}
+		\caption{Heterogenitas pada jaringan lokal, ditunjukkan pada perbedaan protokol jaringan klien.}
+		\label{fig:heteroLAN}
+		\end{figure}
+
 		Beberapa komputer di suatu ruangan yang terhubung dengan LAN dapat membentuk suatu jaringan kecil. Jika ada beberapa ruangan yang ruangan tersebut saling terhubung, maka terbentuklah jaringan yang lebih besar, yang dapat disebut Intranet.
 		
 		Jumlah komputer yang terhubung bisa berbeda-beda tiap tempat, tergantung dari pihak yang terlibat dalam pembuatan jaringan. Salah satu contoh penggunaan intranet dalam sistem terdistribusi adalah jaringan lokal suatu universitas.
@@ -49,9 +56,24 @@
 		
 		Akibat adanya keberagaman ini, ada permasalahan yang timbul ketika tiap perangkat harus saling berkomunikasi. Dengan pengembangan yang berbeda dan perangkat keras yang berbeda akan terjadi kesulitan dalam komunikasi dan pertukaran data.
 		
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\linewidth]{img/middleware}
+		\caption{Sistem terdistribusi dengan \emph{middleware} sebagai \emph{interfaces} antaraplikasi}
+		\label{fig:middleware}
+		\end{figure}
+
+		
 		Untuk mengatasi masalah tersebut, diperlukan adanya \emph{middleware}. Dengan adanya \emph{middleware} perangkat yang dibangun dalam jaringan, hardware, sistem operasi, dan bahasa pemrograman yang berbeda bisa saling berkomunikasi karena mampu memberikan abstraksi yang memungkinkan semua aplikasi berbeda berjalan di atasnya dengan standar yang ditentukan. \cite{Coulouris2012}
 	%------------------------------------------------------
 	\section{\textbf{Keterbukaan}}
+	\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{img/openness}
+	\caption{Dengan \emph{openness} pada sistem terdistribusi, layanan dapat ditambahkan tanpa mengganggu komponen lain.}
+	\label{fig:openness}
+	\end{figure}
+
 	Selain keberagaman, tantangan lain dalam pengembangan sistem terdistribusi adalah bagaimana membuat sistem dapat terus dikembangkan dan tetap berjalan sebagaimana mestinya. Hal inilah yang dimaksud dengan keterbukaan (\emph{openness}) \cite{Coulouris2012}. Sistem harus mampu dikembangkan dan ditambahkan berbagai layanan. Sehingga, antarlayanan dapat saling berbagi \emph{resources}, tersinkron, dan terhubung. \cite{Coulouris2012}
 	
 	Ciri utama dari sistem yang mendukung keterbukaan adalah dokumentasi dan spesifikasinya yang dipublikasikan secara umum \cite{Kamalapur2008}. Publikasi ini memungkinkan semua pengembang untuk  mengembangakan sistem tersebut bersama-sama dan tetap mengacu pada standar yang telah disepakati bersama.
