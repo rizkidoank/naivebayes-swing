@@ -124,6 +124,7 @@
 		
 		
 		\section{Jadwal Kegiatan}
+		\includegraphics[width=\linewidth]{jadwal}
 		\newpage
 		%===========================================
 		\chapter{Landasan Teori}
@@ -132,7 +133,7 @@
 		\subsection{\emph{Bandwidth}}
 		\emph{Bandwith} adalah ukuran dari lebar daerah frekuensi. Jika lebar frekuensi yang digunakan oleh suatu perangkat adalah 2.40 GHz sampai 2.48 GHz maka \emph{bandwith} yang digunkan adalah 0.08 GHz. Semakin besar \emph{bandwith} yang digunakan akan berdampak pada semakin cepat atau besar jumlah data yang dapat dikirimkan didalamnya, dengan ilustrasi semakin lebar tempat yang tersedia di ruang frekuensi, semakin banyak data dapat kita masukkan pada sebuah waktu.\cite{Hartono2011}
 		\subsection{Penyerapan Gelombang Radio}
-		Pada saat gelombang elektromagnetik menabrak suatu material, biasanya gelombang akan menjadi lemah atau teredam [2]. Banyak daya yang hilang akan sangat tergantung pada frekuensi yang digunakan dan tentunya material yang ditabrak. Untuk gelombang mikro, ada dua material utama yang menjadi penyerap [2], yaitu :
+		Pada saat gelombang elektromagnetik menabrak suatu material, biasanya gelombang akan menjadi lemah atau teredam \cite{Setiadi2013}. Banyak daya yang hilang akan sangat tergantung pada frekuensi yang digunakan dan tentunya material yang ditabrak. Untuk gelombang mikro, ada dua material utama yang menjadi penyerap \cite{Setiadi2013}, yaitu :
 		\begin{enumerate}
 			\item Logam
 			
@@ -142,14 +143,35 @@
 			
 			Gelombang mikro akan menyebabkan molekul air bergetar, yang pada prosesnya akan mengambil sebagian energi gelombang.
 		\end{enumerate}
-		Untuk kepentingan pembuatan jaringan nirkabel secara praktis, logam dan air akan dilihat sebagai penyerap gelombang yang baik. Lapisan air merupakan penghalang gelombang mikro. Air mempunyai banyak dampak yang besar. saat terjadi perubahan cuaca, sangat mungkin untuk membuat sambungan jaringan nirkabel menjadi putus [2].
+		Untuk kepentingan pembuatan jaringan nirkabel secara praktis, logam dan air akan dilihat sebagai penyerap gelombang yang baik. Lapisan air merupakan penghalang gelombang mikro. Air mempunyai banyak dampak yang besar. saat terjadi perubahan cuaca, sangat mungkin untuk membuat sambungan jaringan nirkabel menjadi putus \cite{Setiadi2013}.
 		
-		Ada material lain yang mempunyai efek yang lebih kompleks terhadap penyerapan gelombang radio, yaitu pohon atau kayu. Banyaknya penyerapan sangat tergantung pada jumlah air yang ada pada material yang terkena gelombang mikro [2].
+		Ada material lain yang mempunyai efek yang lebih kompleks terhadap penyerapan gelombang radio, yaitu pohon atau kayu. Banyaknya penyerapan sangat tergantung pada jumlah air yang ada pada material yang terkena gelombang mikro \cite{Setiadi2013}.
 		
 		\section{\emph{Wireless Fidelity}}
 		\emph{Wireless Fidelity} adalah standar untuk jaringan lokal nirkabel. Standar ini didasari oleh spesifikasi IEEE 802.11. Spesifikasi terbaru hingga saat ini yaitu 802.11ac. Secara berturut spesifikasi yang ada saat ini yaitu 802.11 b/g/n/ac.
 		
-		Versi Wi-Fi yang paling luas dalam pasaran saat ini beroperasi pada 2.400 MHz hingga 2.483,50 MHz. Pembagian operasi dalam 11 kanal yang berpusat di frekuensi berikut [3]:
+		Versi Wi-Fi yang paling luas dalam pasaran saat ini beroperasi pada 2.400 MHz hingga 2.483,50 MHz. Pembagian operasi dalam 11 kanal yang berpusat di frekuensi berikut \cite{Kartika2010}:
+		
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|}
+				\hline Kanal & Frekuensi \\ 
+				\hline 1 & 2.412 \\ 
+				\hline 2 & 2.417 \\ 
+				\hline 3 & 2.422 \\ 
+				\hline 4 & 2.427 \\ 
+				\hline 5 & 2.432 \\ 
+				\hline 6 & 2.437 \\ 
+				\hline 7 & 2.442 \\ 
+				\hline 8 & 2.447 \\ 
+				\hline 9 & 2.452 \\ 
+				\hline 10 & 2.457 \\ 
+				\hline 11 & 2.462 \\ 
+				\hline 
+			\end{tabular} 
+			\caption{Kanal Wi-Fi}
+			\label{tab:kanal}
+		\end{table}
 		
 		\section{Algoritma Genetika}
 		AG (Algoritma genetika) adalah algoritma yang dikembangkan dari proses pencarian solusi optimasi secara acak. Populasi ini akan ber-evolusi menjadi populasi yang berbeda melalui serangkaian iterasi. Pada akhir iterasi, AG mengembalikan anggota populasi yang terbaik sebagai solusi untuk masalah tersebut. Pada setiap iterasi (generasi), proses evolusi yang terjadi adalah sebagai berikut:
@@ -160,23 +182,45 @@
 			
 			\item Apabila anak sesuai untuk populasi tersebut, suatu skema penggantian diterapkan untuk memilih anggota populasi yang akan digantikan oleh anak.
 			
-			\item Proses ini terus berulang hingga dicapainya kondisi tertentu, misalnya hingga jumlah iterasi tertentu [4].
+			\item Proses ini terus berulang hingga dicapainya kondisi tertentu, misalnya hingga jumlah iterasi tertentu \cite{Suyanto2007}.
 		\end{enumerate}
 		
 		\subsection{Reproduksi}
 		Reproduski ini merupakan proses pergantian orang tua. Ada dua mekanisme yang digunakan untuk melakukan reproduski, yaitu cross over dan mutasi. Dengan adanya reproduksi ini memungkinkan bagi setiap individu dengan nilai \emph{fitness} terbaik untuk menjadi orang tua.
 		\subsection{Pindah Silang}
 		Pindah silang merupakan proses persilangan dua buah induk untuk mengahasilkan anak. Pada proses ini, titik potong pada kromosom bisa kromosom bisa dipilih lebih dari satu, semakin banyak titik potong yang dibuat, maka kualitas anak akan semakin menurun.
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{crossover}
+		\caption{\emph{Crossover} pada AG}
+		\label{fig:crossover}
+		\end{figure}
+
 		\subsection{Mutasi}
-		Mutasi merupakan proses pergantian gen dalam kromosom anak yang hilang akibat adanya pindah silang. Kejadian mutasi ini umumnya memiliki probabilitas kecil, jika dilakukan terlalu sering, maka akan menghasilkan individu yang lemah [4].
+		Mutasi merupakan proses pergantian gen dalam kromosom anak yang hilang akibat adanya pindah silang. Kejadian mutasi ini umumnya memiliki probabilitas kecil, jika dilakukan terlalu sering, maka akan menghasilkan individu yang lemah \cite{Suyanto2007}.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.7\linewidth]{mutasi}
+			\caption{Mutasi pada AG}
+			\label{fig:mutasi}
+		\end{figure}
+		
 		\subsection{\emph{Roulette Wheel}}
 		\emph{Roulette Wheel} ini digunakan untuk melakukan pemilihan orang tua. Pembuatan \emph{Roulette Wheel} ini berdasarkan nilai \emph{fitness} tiap kromosom yang akan dipilih menjadi orang tua. Individu yang memiliki nilai \emph{fitness} tertinggi memiliki peluang untuk terpilih.
+		\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{roulette}
+		\caption{Roulette Wheel pada AG}
+		\label{fig:roulette}
+		\end{figure}
+
+
 		\subsection{Pergantian Individu}
 		Ada dua mekanisme yang bisa dipilih untuk melakukan pergantian individu, yaitu : 
 		\begin{enumerate}
 			\item Mengganti orang tua dengan nilai \emph{fitness} terkecil.
 			
-			\item Membandingkan anak dengan orang tua, jika anak memiliki nilai fitness lebih baik dibandingkan dengan orang tua, maka anak akan menggantikan orang tua dalam populasi [4].
+			\item Membandingkan anak dengan orang tua, jika anak memiliki nilai fitness lebih baik dibandingkan dengan orang tua, maka anak akan menggantikan orang tua dalam populasi \cite{Suyanto2007}.
 		\end{enumerate}
 		
 		
@@ -226,6 +270,19 @@
 			\item Perkawinan
 			\item Mutasi
 		\end{enumerate}
+		\subsubsection{Inisialisasi Populasi}
+		Inisialisai populasi dilakukan dengan membuat 15 individu. Tiap individu merupakan kerangka gedung B dalam bentuk diagram kartesius dengan sebelas lokasi AP yang terletak secara acak dalam koordinat x,y. Kerangka gedung B ini terdiri dari 80x30 kotak, dimana tiap kotak mewakili satu $ m^{2} $ pada gedung B yang sebenarnya. Tiap kotak ini terletak pada koordinat $x,y$ dan menjadi lokasi penempatan AP di simulasi.
+		\subsubsection{Evaluasi Individu}
+		Evaluasi individu atau sering disebut nilai \emph{fitness} merupakan nilai kesesuaian individu untuk menjadi solusi. Ada berbagai cara untuk menentukan nilai \emph{fitness} dari individu. Pada simulasi ini, nilai \emph{fitness} sebuah individu dihitung dengan cara banyaknya kotak yang ter-\emph{cover} oleh AP. Semakin banyak kotak yang ter-\emph{cover} oleh AP, maka nilai \emph{fitness} individu tersebut semakin tinggi. Tiap AP mempunyai \emph{coverage area} dengan diameter 12 kotak. Jadi secara matematis, rumus nilai \emph{fitness} dapat dihitung dengan
+		\[ fitness=\frac{\sum kotak tercover}{\sum total kotak} \]
+		
+		\subsubsection{Seleksi Orangtua}
+		Seleksi orang tua dilakukan dengan menggunakan \emph{Roulette Wheel}. Setelah diperoleh nilai \emph{fitness} tiap individu dalam populasi, kemudian tiap individu ditempatkan dalam sebuah lingkaran dengan proporsi sesuai dengan nilai fitness. Setelah itu di-\emph{generate} sebuah nilai dengan distribusi normal. Nilai yang keluar kemudian digunakan untuk memilih individu sesuai dengan nilai \emph{fitness} yang ada di \emph{Roulette Wheel}.
+		\subsubsection{Perkawinan}
+		Setelah didapat dua orang tua, kemudian dilakukan perkawinan dengan melakukan \emph{crossover}. Penentuan lokasi titik potong \emph{crossover} merupakan acak dan perpotongan yang dilakukan berdasarkan kolom. Setelah dipotong, kemudian bagian yang terpotong dari dua orang tua dipertukarkan.
+		\subsubsection{Mutasi}
+		Setiap anak hasil persilangan memiliki probabilitas mutasi, jika probabilitasnya sesuai, maka anak tersebut akan mengalami mutasi. Mutasi dilakukan dengan merubah lokasi AP dari satu kotak ke kotak lain. 
+		
 		\subsection{Analisis Solusi}
 		Analisis dilakukan dengan menggunakan perangkat lunak Kismet. Perangkat ini digunakan untuk mengukur level daya terima sinyal Wi-Fi sebuah \emph{device}. Pengujian akan dilakukan pada lokasi terjauh pada gedung B dari lokasi AP. 
 		
@@ -240,7 +297,7 @@
 		
 		Dari hasil simulasi terhadap data yang ada. Dilakukan pengujian dengan AG, kemudian dihasilkan nilai \emph{fitness} sebagai berikut :
 
-		\begin{table}
+		\begin{table}[h]
 			\centering
 			\begin{tabular}{|c|c|}
 				\hline \textbf{\emph{Test Case}} & \textbf{\emph{Fitness}} \\ 
@@ -305,8 +362,7 @@
 		\end{itemize}
 		\section{Saran}
 		Dari hasil penelitian ini, perlu kajian lebih lanjut untuk mendapatkan hasil yang lebih optimal. Pada penelitian selanjutnya dapat dikaji kembali dengan memperhitungkan parameter lain seperti pengaruh material dan cuaca terhadap daya pancar AP. Selain itu, diperlukan kajian lebih lanjut dalam proses implementasi AG seperti pada metode \emph{crossover} yang baik, fungsi acak untuk peletakan AP berdasar pada AP sebelumnya.
-		%==========================================================
-		\nocite{*}
+		%=========================================
 		\bibliographystyle{ieeetr}
 		\bibliography{laporanreferensi}
 \end{document}
