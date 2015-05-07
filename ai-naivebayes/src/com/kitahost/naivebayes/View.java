@@ -31,7 +31,15 @@ import javax.swing.JSplitPane;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
+
+import javax.swing.JComboBox;
+
+import java.awt.Color;
+
+import javax.swing.JTextArea;
+import javax.swing.DefaultComboBoxModel;
 
 public class View extends JFrame implements ActionListener,ChangeListener{
 	private static final long serialVersionUID = 1L;
@@ -61,16 +69,25 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 	private JButton btnClassificateRecord;
 	private JLabel lblTotalTraining;
 	private JLabel lblTotalTesting;
-	private JButton btnTest;
 	private JLabel label;
+	private JPanel panelRecord;
+	private JComboBox cbBuying;
+	private JComboBox cbMaint;
+	private JComboBox cbDoors;
+	private JComboBox cbPersons;
+	private JComboBox cbLugBoot;
+	private JComboBox cbSafety;
+	private JPanel panel;
+	private JScrollPane scrollPane;
+	private JTextArea textAreaOutput;
 	
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		
+		setBounds(100, 100, 640, 480);
 		this.menuBar = new JMenuBar();
 		setJMenuBar(this.menuBar);
 		
@@ -97,12 +114,12 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(this.contentPane);
-		this.contentPane.setLayout(new BoxLayout(this.contentPane, BoxLayout.Y_AXIS));
+		this.contentPane.setLayout(new BorderLayout(0, 0));
 		
 		this.panelOpsi = new JPanel();
 		this.panelOpsi.setAlignmentY(Component.TOP_ALIGNMENT);
 		this.panelOpsi.setBorder(new TitledBorder(null, "Classification Menu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		this.contentPane.add(this.panelOpsi);
+		this.contentPane.add(this.panelOpsi, BorderLayout.NORTH);
 		GridBagLayout gbl_panelOpsi = new GridBagLayout();
 		gbl_panelOpsi.columnWidths = new int[] {172, 0, 0, 0};
 		gbl_panelOpsi.rowHeights = new int[] {5, 0, 0, 0};
@@ -110,7 +127,7 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		gbl_panelOpsi.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 		this.panelOpsi.setLayout(gbl_panelOpsi);
 		
-		this.lblDataTraining = new JLabel("Banyak Data Training");
+		this.lblDataTraining = new JLabel("Data Training Percentage");
 		GridBagConstraints gbc_lblDataTraining = new GridBagConstraints();
 		gbc_lblDataTraining.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDataTraining.anchor = GridBagConstraints.NORTHWEST;
@@ -120,32 +137,23 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		
 		this.sliderDataTesting = new JSlider();
 		this.sliderDataTesting.setMajorTickSpacing(50);
-		this.sliderDataTesting.setMinorTickSpacing(20);
-		this.sliderDataTesting.setValue(0);
+		this.sliderDataTesting.setMinorTickSpacing(5);
+		this.sliderDataTesting.setValue(100);
 		this.sliderDataTesting.setPaintTicks(true);
 		this.sliderDataTesting.setPaintLabels(true);
 		GridBagConstraints gbc_sliderDataTesting = new GridBagConstraints();
-		gbc_sliderDataTesting.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sliderDataTesting.anchor = GridBagConstraints.NORTH;
+		gbc_sliderDataTesting.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sliderDataTesting.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderDataTesting.gridx = 0;
 		gbc_sliderDataTesting.gridy = 1;
 		this.panelOpsi.add(this.sliderDataTesting, gbc_sliderDataTesting);
 		
-		this.label = new JLabel("0");
-		this.label.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
-		this.label.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 1;
-		gbc_label.gridy = 1;
-		this.panelOpsi.add(this.label, gbc_label);
-		
 		this.btnReloadTable = new JButton("Reload Table");
 		GridBagConstraints gbc_btnReloadTable = new GridBagConstraints();
+		gbc_btnReloadTable.anchor = GridBagConstraints.NORTH;
 		gbc_btnReloadTable.insets = new Insets(0, 0, 5, 5);
 		gbc_btnReloadTable.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnReloadTable.anchor = GridBagConstraints.NORTH;
 		gbc_btnReloadTable.gridx = 2;
 		gbc_btnReloadTable.gridy = 1;
 		this.panelOpsi.add(this.btnReloadTable, gbc_btnReloadTable);
@@ -153,37 +161,99 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		
 		this.btnRandomizeData = new JButton("Randomize Data");
 		GridBagConstraints gbc_btnRandomizeData = new GridBagConstraints();
+		gbc_btnRandomizeData.anchor = GridBagConstraints.NORTH;
 		gbc_btnRandomizeData.insets = new Insets(0, 0, 5, 0);
 		gbc_btnRandomizeData.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnRandomizeData.anchor = GridBagConstraints.NORTH;
 		gbc_btnRandomizeData.gridx = 3;
 		gbc_btnRandomizeData.gridy = 1;
 		this.panelOpsi.add(this.btnRandomizeData, gbc_btnRandomizeData);
 		this.btnRandomizeData.addActionListener(this);
 		
-		this.btnClassificateRecord = new JButton("Classificate 1 Record");
+		this.label = new JLabel("0%");
+		this.label.setLabelFor(this.sliderDataTesting);
+		this.label.setVerticalAlignment(SwingConstants.TOP);
+		this.label.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
+		this.label.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.fill = GridBagConstraints.VERTICAL;
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 0;
+		gbc_label.gridy = 2;
+		this.panelOpsi.add(this.label, gbc_label);
+		
+		this.btnClassificateRecord = new JButton("Classificate Record");
 		GridBagConstraints gbc_btnClassificateRecord = new GridBagConstraints();
+		gbc_btnClassificateRecord.anchor = GridBagConstraints.NORTH;
+		gbc_btnClassificateRecord.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnClassificateRecord.insets = new Insets(0, 0, 5, 5);
 		gbc_btnClassificateRecord.gridx = 2;
 		gbc_btnClassificateRecord.gridy = 2;
 		this.panelOpsi.add(this.btnClassificateRecord, gbc_btnClassificateRecord);
+		this.btnClassificateRecord.addActionListener(this);
 		
-		this.btnClassificate = new JButton("Classificate 100%");
+		this.btnClassificate = new JButton("Classificate Testing");
 		GridBagConstraints gbc_btnClassificate = new GridBagConstraints();
+		gbc_btnClassificate.anchor = GridBagConstraints.NORTH;
 		gbc_btnClassificate.insets = new Insets(0, 0, 5, 0);
 		gbc_btnClassificate.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnClassificate.anchor = GridBagConstraints.NORTH;
 		gbc_btnClassificate.gridx = 3;
 		gbc_btnClassificate.gridy = 2;
 		this.panelOpsi.add(this.btnClassificate, gbc_btnClassificate);
+		this.btnClassificate.addActionListener(this);
 		
-		this.btnTest = new JButton("Test");
-		GridBagConstraints gbc_btnTest = new GridBagConstraints();
-		gbc_btnTest.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnTest.insets = new Insets(0, 0, 0, 5);
-		gbc_btnTest.gridx = 2;
-		gbc_btnTest.gridy = 3;
-		this.panelOpsi.add(this.btnTest, gbc_btnTest);
+		this.panel = new JPanel();
+		this.panel.setBorder(new TitledBorder(null, "Output", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 3;
+		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 3;
+		this.panelOpsi.add(this.panel, gbc_panel);
+		this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.X_AXIS));
+		
+		this.scrollPane = new JScrollPane();
+		this.panel.add(this.scrollPane);
+		
+		this.textAreaOutput = new JTextArea();
+		this.textAreaOutput.setTabSize(4);
+		this.textAreaOutput.setRows(5);
+		this.scrollPane.setViewportView(this.textAreaOutput);
+		this.textAreaOutput.setForeground(Color.GREEN);
+		this.textAreaOutput.setEditable(false);
+		this.textAreaOutput.setBackground(Color.BLACK);
+		
+		this.panelRecord = new JPanel();
+		GridBagConstraints gbc_panelRecord = new GridBagConstraints();
+		gbc_panelRecord.fill = GridBagConstraints.BOTH;
+		gbc_panelRecord.gridx = 3;
+		gbc_panelRecord.gridy = 3;
+		this.panelOpsi.add(this.panelRecord, gbc_panelRecord);
+		this.panelRecord.setLayout(new BoxLayout(this.panelRecord, BoxLayout.Y_AXIS));
+		
+		this.cbBuying = new JComboBox();
+		this.cbBuying.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "vgood", "good"}));
+		this.panelRecord.add(this.cbBuying);
+		
+		this.cbMaint = new JComboBox();
+		this.cbMaint.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "vgood", "good"}));
+		this.panelRecord.add(this.cbMaint);
+		
+		this.cbDoors = new JComboBox();
+		this.cbDoors.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "5more"}));
+		this.panelRecord.add(this.cbDoors);
+		
+		this.cbPersons = new JComboBox();
+		this.cbPersons.setModel(new DefaultComboBoxModel(new String[] {"2", "4", "more"}));
+		this.panelRecord.add(this.cbPersons);
+		
+		this.cbLugBoot = new JComboBox();
+		this.cbLugBoot.setModel(new DefaultComboBoxModel(new String[] {"small", "med", "big"}));
+		this.panelRecord.add(this.cbLugBoot);
+		
+		this.cbSafety = new JComboBox();
+		this.cbSafety.setModel(new DefaultComboBoxModel(new String[] {"low", "med", "high"}));
+		this.panelRecord.add(this.cbSafety);
 		
 		this.splitPane = new JSplitPane();
 		this.splitPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -223,13 +293,17 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		
 		this.mntmExit.addActionListener(this);
 		this.mntmOpenFile.addActionListener(this);
-		this.btnClassificate.addActionListener(this);
-		this.btnClassificateRecord.addActionListener(this);
-		this.btnTest.addActionListener(this);
 		this.sliderDataTesting.addChangeListener(this);
-		this.setVisible(true);
 	}
 	
+	public JTextArea getTextAreaOutput() {
+		return textAreaOutput;
+	}
+
+	public void setTextAreaOutput(JTextArea textAreaOutput) {
+		this.textAreaOutput = textAreaOutput;
+	}
+
 	public void registerObserver(Controller controller){
 		this.controller = controller;
 	}
@@ -267,15 +341,45 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		}
 		else if (source == this.btnClassificate) {
 			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
+				this.textAreaOutput.setText("");
 				this.controller.testingClassification();
 			}
 		}
-		else if (source == this.btnTest){
-			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null){
-				this.controller.test();
+		else if (source == this.btnClassificateRecord) {
+			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
+				this.textAreaOutput.setText("");
+				String[] data = new String[6];
+				data[0]=this.cbBuying.getSelectedItem().toString();
+				data[1]=this.cbMaint.getSelectedItem().toString();
+				data[2]=this.cbDoors.getSelectedItem().toString();
+				data[3]=this.cbPersons.getSelectedItem().toString();
+				data[4]=this.cbLugBoot.getSelectedItem().toString();
+				data[5]=this.cbSafety.getSelectedItem().toString();
+				this.textAreaOutput.append("Record Classification\n");
+				this.textAreaOutput.append("{buying,maint,doors,persons,lug_boot,safety} : " + data[0] +" , ");
+				this.textAreaOutput.append(data[1] +" , ");
+				this.textAreaOutput.append(data[2] +" , ");
+				this.textAreaOutput.append(data[3] +" , ");
+				this.textAreaOutput.append(data[4] +" , ");
+				this.textAreaOutput.append(data[5] +"\n\n");
+				this.textAreaOutput.append("Independent Probability\n");
+				this.textAreaOutput.append("acc      : " + this.controller.calcProbIndependent("acc") +"\n");
+				this.textAreaOutput.append("unacc    : " + this.controller.calcProbIndependent("unacc") +"\n");
+				this.textAreaOutput.append("good     : " + this.controller.calcProbIndependent("good") +"\n");
+				this.textAreaOutput.append("vgood    : " + this.controller.calcProbIndependent("vgood") +"\n\n");
+				this.controller.calcDependentOne(data);
+				this.textAreaOutput.append("Classification : "+this.controller.classification(data)+"\n\n");
 			}
 		}
 	}
+	public JSlider getSliderDataTesting() {
+		return sliderDataTesting;
+	}
+
+	public void setSliderDataTesting(JSlider sliderDataTesting) {
+		this.sliderDataTesting = sliderDataTesting;
+	}
+
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
