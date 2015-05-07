@@ -16,7 +16,6 @@ public class Controller {
 		this.view = view;
 		this.model = model;
 	}
-
 	public void loadFileToTable(File file) {
 		try {
 			this.model = new Model();
@@ -39,8 +38,9 @@ public class Controller {
 							line.substring(line.indexOf("{")+1,line.indexOf("}")).toLowerCase().split(",")
 						);
 					}
-					}
 				}
+			}
+			loadTable(this.view.getSliderDataTesting().getValue());
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -112,10 +112,16 @@ public class Controller {
 			for (int j = 0; j < hasil.length; j++)
 				hasil[j]=hasil[j]*calcDependentProb(header,data[i],attributes[j]);
 		}
+		this.view.getTextAreaOutput().append("\nDependent Probability\n");
+		this.view.getTextAreaOutput().append(attributes[0] + "\t: " + hasil[0] + "\n");
+		this.view.getTextAreaOutput().append(attributes[1] + "\t: " + hasil[1] + "\n");
+		this.view.getTextAreaOutput().append(attributes[2] + "\t: " + hasil[2] + "\n");
+		this.view.getTextAreaOutput().append(attributes[3] + "\t: " + hasil[3] + "\n\n");
 		return hasil;
 	}
 
 	private double calcDependentProb(String header, String value, String valueKelas) {
+		this.view.getTextAreaOutput().append("{sumDependent,sumRecord}: " + calcTotalDependent(header, value, valueKelas)+" , "+calcRecordTotal("acceptability",valueKelas)+"\n");
 		return calcTotalDependent(header, value, valueKelas)/calcRecordTotal("acceptability",valueKelas);
 	}
 
@@ -134,7 +140,7 @@ public class Controller {
 			hasil.add(classification(data));
 		}
 		double akurasi = calcAcurracy(hasil);
-		System.out.println(akurasi);
+		this.view.getTextAreaOutput().append("Classification accuracy : " + akurasi +"%\n");
 	}
 
 	private double calcAcurracy(ArrayList<String> hasil) {
@@ -142,11 +148,12 @@ public class Controller {
 		for (int i = 0; i < this.model.getDataTesting().size(); i++)
 			if (this.model.getDataTesting().get(i)[6].equals(hasil.get(i)))
 				n++;				
-
+		this.view.getTextAreaOutput().append("Classification match : " + n + "\n");
+		this.view.getTextAreaOutput().append("Data testing size    : " + this.model.getDataTesting().size() + "\n\n");
 		return (n/this.model.getDataTesting().size()*100);
 	}
 
-	private String classification(String[] data) {
+	String classification(String[] data) {
 		double[] hasil = calcDependentOne(data);
 		String[] attributesClass = this.model.getAttributes().get("acceptability");
 		
@@ -165,12 +172,5 @@ public class Controller {
 		}
 		else
 			return "good";
-	}
-
-	public void test() {
-		for (String str : this.model.getAttributes().get("acceptability")) {
-			System.out.println(str);
-		}
-		
 	}
 }
