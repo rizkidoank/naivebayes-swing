@@ -67,13 +67,17 @@ public class Controller {
 		}
 		this.view.getLblTotalTraining().setText("Total : " + this.model.getNumTraining());
 		this.view.getLblTotalTesting().setText("Total : " + this.model.getNumTesting());
+		this.view.getTextAreaOutput().setText("");
+		for (String header : this.model.getHeader()) {
+			printAttributes(header);
+		}
 	}
 
 	public void randomizeData(int percent) {
 		int index = 0;
 		String[] tmp;
 		for (int i = 0; i < this.model.getData().size(); i++) {
-			index = ((index+776) % this.model.getData().size());
+			index = ((index+ (int) Math.round(((double) this.model.getData().size())/2)) % this.model.getData().size());
 			tmp=this.model.getData().get(i);
 			this.model.getData().set(i, this.model.getData().get(index));
 			this.model.getData().set(index, tmp);
@@ -136,7 +140,14 @@ public class Controller {
 	
 	public void testingClassification() {
 		ArrayList<String> hasil = new ArrayList<String>();
-		for (String[] data : this.model.getDataTesting()) {
+		String[] data = new String[6];
+		for (String[] tmp : this.model.getDataTesting()) {
+			data[0]=tmp[0];
+			data[1]=tmp[1];
+			data[2]=tmp[2];
+			data[3]=tmp[3];
+			data[4]=tmp[4];
+			data[5]=tmp[5];
 			hasil.add(classification(data));
 		}
 		double akurasi = calcAcurracy(hasil);
@@ -172,5 +183,13 @@ public class Controller {
 		}
 		else
 			return "good";
+	}
+	
+	public void printAttributes(String header){
+		this.view.getTextAreaOutput().append(header + " : ");
+		for (String value : this.model.getAttributes().get(header)) {
+			this.view.getTextAreaOutput().append(value + ",");
+		}
+		this.view.getTextAreaOutput().append("\n");
 	}
 }

@@ -232,11 +232,11 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		this.panelRecord.setLayout(new BoxLayout(this.panelRecord, BoxLayout.Y_AXIS));
 		
 		this.cbBuying = new JComboBox();
-		this.cbBuying.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "vgood", "good"}));
+		this.cbBuying.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "med", "low"}));
 		this.panelRecord.add(this.cbBuying);
 		
 		this.cbMaint = new JComboBox();
-		this.cbMaint.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "vgood", "good"}));
+		this.cbMaint.setModel(new DefaultComboBoxModel(new String[] {"vhigh", "high", "med", "low"}));
 		this.panelRecord.add(this.cbMaint);
 		
 		this.cbDoors = new JComboBox();
