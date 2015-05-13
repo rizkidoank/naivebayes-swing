@@ -5,9 +5,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+
+import org.bson.Document;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 public class Controller{
 	private final View view;
@@ -17,6 +26,7 @@ public class Controller{
 		this.view = view;
 		this.model = model;
 	}
+	
 	public void loadFileToTable(File file) {
 		try {
 			this.model = new Model();
@@ -24,7 +34,7 @@ public class Controller{
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line=reader.readLine())!=null) {
 				if (line.charAt(0)!='@'){
-					model.getData().add(line.toLowerCase().split(","));
+					this.model.getData().add(line.toLowerCase().split(","));
 				}
 				else{
 					if(
@@ -92,7 +102,6 @@ public class Controller{
 			if (row[row.length-1].equals(value))
 				nElm++;
 		}
-		System.out.println(nElm);
 		return (nElm/this.model.getDataTraining().size());
 	}
 	
@@ -195,4 +204,37 @@ public class Controller{
 		}
 		this.view.getTextAreaOutput().append("\n");
 	}
+	
+	public void saveToDB(){
+		List<DBObject> dataset = new ArrayList<>();
+		dataset.add(this.model.getHeader());
+	}
+	
+	public void readFromDB(){
+		for (Document doc : this.model.getDb().getCollection().find()) {
+			
+		}
+	}
+}
+
+class saveToDB extends SwingWorker<Boolean, Void>{
+	private Model model;
+    public saveToDB(Model model) {
+		this.model = model;
+	}
+	@Override
+	protected Boolean doInBackground() throws Exception {
+		this.model.getDb().getCollection().drop();
+		List<Document> documents = new ArrayList<Document>();
+		for (String[] data: this.model.getData()) {
+			Document bsonData = new Document(this.model.getHeader().get(0),data[0]);
+			for (int i = 1; i < data.length; i++) {
+				bsonData.append(this.model.getHeader().get(i), data[i]);
+			}
+			documents.add(bsonData);
+		}
+		this.model.getDb().getCollection().insertMany(documents);
+		return null;
+	}
+	
 }

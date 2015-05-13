@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -48,11 +47,9 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 	private JMenuBar menuBar;
 	private JMenu mnProgram;
 	private JMenu mnDataset;
-	private JMenu mnOptions;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmOpenFile;
 	private JMenuItem mntmReadFromDatabase;
-	private JMenuItem mntmConfigureDatabase;
 	private Controller controller;
 	private JScrollPane scrollPaneTraining;
 	private JScrollPane scrollPaneTesting;
@@ -81,6 +78,7 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JTextArea textAreaOutput;
+	private JMenuItem mntmSavetoDB;
 	
 	/**
 	 * Create the frame.
@@ -104,14 +102,11 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		this.mntmOpenFile = new JMenuItem("Open file...");
 		this.mnDataset.add(this.mntmOpenFile);
 		
+		this.mntmSavetoDB = new JMenuItem("Save to database");
+		this.mnDataset.add(this.mntmSavetoDB);
+		
 		this.mntmReadFromDatabase = new JMenuItem("Read from database...");
 		this.mnDataset.add(this.mntmReadFromDatabase);
-		
-		this.mnOptions = new JMenu("Options");
-		this.menuBar.add(this.mnOptions);
-		
-		this.mntmConfigureDatabase = new JMenuItem("Configure database");
-		this.mnOptions.add(this.mntmConfigureDatabase);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(this.contentPane);
@@ -295,6 +290,8 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		this.mntmExit.addActionListener(this);
 		this.mntmOpenFile.addActionListener(this);
 		this.sliderDataTesting.addChangeListener(this);
+		this.mntmSavetoDB.addActionListener(this);
+		this.mntmReadFromDatabase.addActionListener(this);
 	}
 	
 	public JTextArea getTextAreaOutput() {
@@ -331,32 +328,27 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 			}
 		}
 		else if (source == this.btnReloadTable) {
-			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
-				this.controller.loadTable(this.sliderDataTesting.getValue());
-			}
+			this.controller.loadTable(this.sliderDataTesting.getValue());
 		}
 		else if (source == this.btnRandomizeData) {
-			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
 				this.controller.randomizeData(this.sliderDataTesting.getValue());
-			}
 		}
 		else if (source == this.btnClassificate) {
-			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
 				this.textAreaOutput.setText("");
 				ControllerWorker cworker = new ControllerWorker(this.controller);
 				cworker.execute();
-			}
 		}
 		else if (source == this.btnClassificateRecord) {
-			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
 				this.textAreaOutput.setText("");
 				String[] data = new String[6];
+
 				data[0]=this.cbBuying.getSelectedItem().toString();
 				data[1]=this.cbMaint.getSelectedItem().toString();
 				data[2]=this.cbDoors.getSelectedItem().toString();
 				data[3]=this.cbPersons.getSelectedItem().toString();
 				data[4]=this.cbLugBoot.getSelectedItem().toString();
 				data[5]=this.cbSafety.getSelectedItem().toString();
+				
 				this.textAreaOutput.append("Record Classification\n");
 				this.textAreaOutput.append("{buying,maint,doors,persons,lug_boot,safety} : " + data[0] +" , ");
 				this.textAreaOutput.append(data[1] +" , ");
@@ -370,15 +362,17 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 				this.textAreaOutput.append("good     : " + this.controller.calcProbIndependent("good") +"\n");
 				this.textAreaOutput.append("vgood    : " + this.controller.calcProbIndependent("vgood") +"\n\n");
 				this.textAreaOutput.append("Classification : "+this.controller.classification(data)+"\n\n");
-			}
+		}
+		else if (source==this.mntmSavetoDB) {
+			this.controller.saveToDB();
+		}
+		else if (source==this.mntmReadFromDatabase) {
+			this.controller.readFromDB();
 		}
 	}
+	
 	public JSlider getSliderDataTesting() {
 		return sliderDataTesting;
-	}
-
-	public void setSliderDataTesting(JSlider sliderDataTesting) {
-		this.sliderDataTesting = sliderDataTesting;
 	}
 
 	@Override
@@ -393,16 +387,8 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		return tableTraining;
 	}
 
-	public void setTableTraining(JTable tableTraining) {
-		this.tableTraining = tableTraining;
-	}
-
 	public JTable getTableTesting() {
 		return tableTesting;
-	}
-
-	public void setTableTesting(JTable tableTesting) {
-		this.tableTesting = tableTesting;
 	}
 
 	public JLabel getLblTotalTraining() {

@@ -2,7 +2,12 @@ package com.kitahost.naivebayes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
+
+import org.bson.Document;
 
 public class Model {
 	private Map<String, String[]> attributes;
@@ -10,42 +15,43 @@ public class Model {
 	private ArrayList<String[]> data;
 	private int numTraining;
 	private int numTesting;
+	private Database db;
 	
-	public int getNumTraining() {
-		return numTraining;
-	}
-	public void setNumTraining(int numTraining) {
-		this.numTraining = numTraining;
-	}
-	public int getNumTesting() {
-		return numTesting;
-	}
-	public void setNumTesting(int numTesting) {
-		this.numTesting = numTesting;
-	}
 	public Model() {
 		this.attributes = new HashMap<String, String[]>();
 		this.header = new ArrayList<String>();
 		this.data = new ArrayList<String[]>();
+		this.db = new Database("localhost", "dataset", "car");	
 	}
+	
+	public int getNumTraining() {
+		return numTraining;
+	}
+	
+	public void setNumTraining(int numTraining) {
+		this.numTraining = numTraining;
+	}
+	
+	public int getNumTesting() {
+		return numTesting;
+	}
+	
+	public void setNumTesting(int numTesting) {
+		this.numTesting = numTesting;
+	}
+	
 	public Map<String, String[]> getAttributes() {
 		return attributes;
 	}
-	public void setAttributes(Map<String, String[]> attributes) {
-		this.attributes = attributes;
-	}
+	
 	public ArrayList<String> getHeader() {
 		return header;
 	}
-	public void setHeader(ArrayList<String> header) {
-		this.header = header;
-	}
+	
 	public ArrayList<String[]> getData() {
 		return data;
 	}
-	public void setData(ArrayList<String[]> data) {
-		this.data = data;
-	}
+	
 	public ArrayList<String[]> getDataTraining(){
 		ArrayList<String[]> dataTraining = new ArrayList<String[]>();
 		for (int i = 0; i < this.getNumTraining(); i++) {
@@ -53,6 +59,7 @@ public class Model {
 		}
 		return dataTraining;
 	}
+	
 	public ArrayList<String[]> getDataTesting(){
 		ArrayList<String[]> dataTesting = new ArrayList<String[]>();
 		for (int i = this.getNumTraining(); i < this.getData().size(); i++) {
@@ -60,4 +67,10 @@ public class Model {
 		}
 		return dataTesting;
 	}
+
+	public Database getDb() {
+		return db;
+	}
+	
+	
 }
