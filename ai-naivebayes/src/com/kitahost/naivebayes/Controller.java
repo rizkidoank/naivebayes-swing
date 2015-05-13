@@ -5,10 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.table.DefaultTableModel;
 
-public class Controller {
+public class Controller{
 	private final View view;
 	private Model model;
 	
@@ -77,7 +78,7 @@ public class Controller {
 		int index = 0;
 		String[] tmp;
 		for (int i = 0; i < this.model.getData().size(); i++) {
-			index = ((index+ (int) Math.round(((double) this.model.getData().size())/2)) % this.model.getData().size());
+			index = ((int)(Math.random()*this.model.getData().size()/2) % this.model.getData().size());
 			tmp=this.model.getData().get(i);
 			this.model.getData().set(i, this.model.getData().get(index));
 			this.model.getData().set(index, tmp);
@@ -91,6 +92,7 @@ public class Controller {
 			if (row[row.length-1].equals(value))
 				nElm++;
 		}
+		System.out.println(nElm);
 		return (nElm/this.model.getDataTraining().size());
 	}
 	
@@ -113,8 +115,9 @@ public class Controller {
 			hasil[i]=1;
 		for (int i=0; i< data.length;i++) {
 			String header = this.model.getHeader().get(i);
-			for (int j = 0; j < hasil.length; j++)
+			for (int j = 0; j < hasil.length; j++){
 				hasil[j]=hasil[j]*calcDependentProb(header,data[i],attributes[j]);
+			}
 		}
 		this.view.getTextAreaOutput().append("\nDependent Probability\n");
 		this.view.getTextAreaOutput().append(attributes[0] + "\t: " + hasil[0] + "\n");
@@ -125,7 +128,7 @@ public class Controller {
 	}
 
 	private double calcDependentProb(String header, String value, String valueKelas) {
-		this.view.getTextAreaOutput().append("{sumDependent,sumRecord}: " + calcTotalDependent(header, value, valueKelas)+" , "+calcRecordTotal("acceptability",valueKelas)+"\n");
+		this.view.getTextAreaOutput().append(header + "," + value + "," + valueKelas + " {sumDependent,sumRecord}: " + calcTotalDependent(header, value, valueKelas)+" , "+calcRecordTotal("acceptability",valueKelas)+"\n");
 		return calcTotalDependent(header, value, valueKelas)/calcRecordTotal("acceptability",valueKelas);
 	}
 

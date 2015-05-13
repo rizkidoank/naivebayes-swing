@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -342,7 +343,8 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		else if (source == this.btnClassificate) {
 			if (this.tableTraining.getModel()!=null && this.tableTesting.getModel()!=null) {
 				this.textAreaOutput.setText("");
-				this.controller.testingClassification();
+				ControllerWorker cworker = new ControllerWorker(this.controller);
+				cworker.execute();
 			}
 		}
 		else if (source == this.btnClassificateRecord) {
@@ -367,7 +369,6 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 				this.textAreaOutput.append("unacc    : " + this.controller.calcProbIndependent("unacc") +"\n");
 				this.textAreaOutput.append("good     : " + this.controller.calcProbIndependent("good") +"\n");
 				this.textAreaOutput.append("vgood    : " + this.controller.calcProbIndependent("vgood") +"\n\n");
-				this.controller.calcDependentOne(data);
 				this.textAreaOutput.append("Classification : "+this.controller.classification(data)+"\n\n");
 			}
 		}

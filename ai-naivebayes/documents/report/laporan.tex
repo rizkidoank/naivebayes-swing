@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[left=4.00cm, right=3.00cm, top=3.00cm, bottom=3.00cm]{geometry}
+\usepackage[bahasa]{babel}
+\author{
+	Rizki\\
+	\textit{Mirza Dita A}\\
+	\textit{Ali Ridho F}\\
+	\textit{Luthfi Rendragiri}\\
+}
+\title{
+	\textbf{Dokumentasi Tugas Besar}\\
+	\textbf{Kecerdasan Mesin dan Artifisial}
+}
+
+\begin{document}
+	\maketitle
+	\section*{Teorema Bayes}
+	Teorema bayes, Hukum Bayes, atau Aturan Bayes merupakan teorema yang ditemukan oleh Thomas Bayes, ahli statistika dan filosofis Inggris.Teorema Bayes berkaitan tentang probabilitas kondisional. Secara umum, teorema Bayes dapat dinyatakan dengan persamaan matematis sebagai berikut :
+	\[ P(A|B)=\frac{P(B|A)P(A)}{P(B)} \]
+	Dimana A dan B merupakan \emph{event}.
+	\begin{itemize}
+		\item $P(A)$ dan $P(B)$ merupakan peluang tiap masing-masing \emph{event}.
+		\item $P(A|B)$ merupakan probabilitas kondisional untuk $A$ jika $B$ terjadi.
+	\end{itemize} 
+	
+	Pada kecerdasan artifisial dan \emph{Data Mining}, teorema Bayes digunakan dalam metode \emph{learning} yang sering disebut dengan nama \emph{Na\"{i}ve Bayes Classifier}. Pada beberapa referensi, algoritma ini memiliki penamaan yang beragam.
+	
+	Implementasi didunia nyata cukup beragam, misal untuk \emph{text classification}, \emph{spam filtering}, \emph{document classification}, dan lain-lain. Berikut contoh sederhana untuk \emph{Na\"{i}ve Bayes Classifier} : 
+	\subsection*{Contoh}
+	Misal, terdapat dua kelas yaitu,
+	\[ c1=pria, c2=wanita \]
+	diketahui, ada orang bernama "Drew" yang jenis kelaminnya diasumsikan kita tidak tahu. Berdasarkan kelas yang ada, probabilitas yang mungkin adalah, $P(pria|drew)$ atau $P(wanita|drew)$.
+	Misal kita memiliki data sebagai berikut:
+	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline Nama & Jenis Kelamn \\ 
+			\hline Drew & Pria \\ 
+			\hline Claudia & Wanita \\ 
+			\hline Drew & Wanita \\ 
+			\hline Drew & Wanita \\ 
+			\hline Alberto & Pria \\ 
+			\hline Karin & Wanita \\ 
+			\hline Sergio & Pria \\ 
+			\hline 
+		\end{tabular}
+		\caption{Data sampel acak}
+	\end{table} 
+	
+	Diketahui berdasarkan Teorema Bayes,
+	\[ P(A|B) = \frac{P(B|A)(P(A)}{P(B)}\]
+	sehingga, dengan data yang kita miliki,
+	\[ P(pria|drew) = \frac{1/3*3/8}{5/8}=\frac{0.125}{0.625}=0.2\]
+	\[ P(wanita|drew) = \frac{2/5*5/8}{3/8}=\frac{0.250}{0.667}=0.374\]
+	Maka, berdasarkan sampel acak dari tabel diatas, orang yang bernama Drew besar kemungkinan berjenis kelamin wanita.
+	\newpage
+	\section*{Algoritma}
+	Pada kasus tugas besar ini, digunakan dataset yang telah diberikan (\emph{car.dat}) yang kemudian akan dibagi menjadi dua bagian yaitu data training dan data testing. Misal, 20\% data testing 80\% data training, atau kombinasi lain.
+	
+	Algoritma komputasi pada program yang telah dibuat dapat dilihat pada method berikut:
+	\begin{description}
+		\item[calcProbIndependent] menghitung \emph{independent probability} pada kelas tertentu terhadap data training.
+		\item[CalcDependentProb] menghitung \emph{dependent probability} atribut tertentu terhadap kelas tertentu. Dipanggil pada method \emph{calcDependentOne}
+		\item[CalcDependentOne] menghitung \emph{dependent probability} untuk satu \emph{record} (seluruh atribut) terhadap seluruh kelas.
+		\item[calcTotalDependent] menghitung jumlah \emph{dependent} suatu atribut terhadap kelas tertentu di data training. Dipanggil pada method \emph{calcDependentProb}
+		\item[calcRecordTotal] menghitung jumlah \emph{record} yang ada pada data training. Dipanggil pada method \emph{calcDependentProb}
+		\item[classification] mengklasifikasikan suatu \emph{record} pada kelas tertentu.
+		\item[calcAccuracy] menghitung akurasi hasil klasifikasi. 
+	\end{description}
+	\subsection*{Algoritma Independent Probability}
+	Berdasarkan pada method \emph{calcProbIndependent}, algoritma untuk menghitung probabilitas independen adalah sebagai berikut:
+	\[ P(kelas) = \frac{nKelas}{nData}\]
+	\begin{itemize}
+		\item nData adalah banyaknya datatraining.
+	\end{itemize}
+	Contoh : 50\% data training, sehingga \emph{independent probability} yang didapat adalah sebagai berikut:
+	\[ P(unacc) = \frac{180}{864}=0.2083\]
+	\[ P(acc) = \frac{684}{864}=0.7916\]
+	\[ P(vgood) = \frac{0}{864}=0\]
+	\[ P(good) = \frac{0}{864}=0\]
+	
+	\subsection*{Algoritma Dependent Probability}
+	Berdasaran pada method \emph{calcDependenProb}, algoritma untuk menghitung probabilitas dependen adalah sebagai berikut:
+	\[ P(acc|x)=\frac{P(x_{1}|acc)P(x_{2}|acc)P(x_{3}|acc)P(x_{4}|acc)P(x_{5}|acc)P(x_{6}|acc)P(acc)}{P(data)} \]
+	dengan $x$ adalah satu \emph{record} data, dalam kasus ini memiliki enam header / atribut. 
+	\newpage
+	
+	\section*{\textit{Class Diagram}}
+	\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm, height=7cm]{class}
+	\caption{Class Diagram}
+	\label{fig:class}
+	\end{figure}
+	
+	\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{view}
+	\caption{View}
+	\label{fig:view}
+	\end{figure}
+	\newpage
+	\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{controller}
+	\caption{Controller}
+	\label{fig:controller}
+	\end{figure}
+	
+	\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{model}
+	\caption{Model}
+	\label{fig:model}
+	\end{figure}
+	\newpage
+	\section*{Fungsionalitas Program}
+	Selain fungsionalitas utama, terdapat fitur tambahan pada program meliputi:
+	\begin{itemize}
+		\item Tatap muka pengguna dengan \emph{swing}
+		\item \emph{Randomize} atau acak data
+		\item \emph{Multi-threading} untuk komputasi berat (klasifikasi testing).
+		\item \emph{Console verbose} untuk melihat log jalannya program.
+		\item \emph{splitting} data training dan data testing dengan \emph{slider}  
+	\end{itemize}
+	\section*{Test Case}
+	Dengan program yang telah dibuat, dilakukan testcase dengan dataset \emph{car.dat} yang telah disediakan. Adapun testcase akan diujikan pada perbandingan datatraining dan data testing sebesar 75:25, 50:50, 25:75, 10:90, dan 90:10. Kemudian akan dilakukan analisis terhadap hasil testcase dan ditentukan saran terhadap permasalahan ini.
+	\bibliographystyle{ieeetran}
+	\bibliography{referensi}
+\end{document}
