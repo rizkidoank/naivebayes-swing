@@ -9,9 +9,9 @@
 \usepackage[bahasa]{babel}
 \author{
 	Rizki\\
-	\textit{Mirza Dita A}\\
-	\textit{Ali Ridho F}\\
-	\textit{Luthfi Rendragiri}\\
+	Mirza Dita A\\
+	Ali Ridho F\\
+	Luthfi Rendragiri
 }
 \title{
 	\textbf{Dokumentasi Tugas Besar}\\
@@ -88,7 +88,7 @@
 	
 	\subsection*{Algoritma Dependent Probability}
 	Berdasaran pada method \emph{calcDependenProb}, algoritma untuk menghitung probabilitas dependen adalah sebagai berikut:
-	\[ P(acc|x)=\frac{P(x_{1}|acc)P(x_{2}|acc)P(x_{3}|acc)P(x_{4}|acc)P(x_{5}|acc)P(x_{6}|acc)P(acc)}{P(data)} \]
+	\[ P(acc|x)=\frac{P(x_{1}|acc)P(x_{2}|acc)P(x_{3}|acc)P(x_{4}|acc)P(x_{5}|acc)P(x_{6}|acc)P(acc)}{P(x)} \]
 	dengan $x$ adalah satu \emph{record} data, dalam kasus ini memiliki enam header / atribut. 
 	\newpage
 	
@@ -131,7 +131,29 @@
 		\item \emph{splitting} data training dan data testing dengan \emph{slider}  
 	\end{itemize}
 	\section*{Test Case}
-	Dengan program yang telah dibuat, dilakukan testcase dengan dataset \emph{car.dat} yang telah disediakan. Adapun testcase akan diujikan pada perbandingan datatraining dan data testing sebesar 75:25, 50:50, 25:75, 10:90, dan 90:10. Kemudian akan dilakukan analisis terhadap hasil testcase dan ditentukan saran terhadap permasalahan ini.
-	\bibliographystyle{ieeetran}
+	Dengan program yang telah dibuat, dilakukan testcase dengan dataset \emph{car.dat} yang telah disediakan. Adapun testcase akan diujikan pada perbandingan datat raining dan data testing sebesar 75:25, 50:50, 25:75, 10:90, dan 90:10. Kemudian akan dilakukan analisis terhadap hasil testcase dan ditentukan saran terhadap permasalahan ini.
+	
+	Setelah dilakukan testcase sebanyak lima kali untuk masing-masing perbandingan data training dan data testing yang telah diacak, dihasilkan nilai keakuratan yang fluktuatif dengan kisaran rata-rata terletak diantara 80\%-90\%. Namun, akurasi akan sangat buruk jika data tidak diacak. Hal ini normal, karena dataset yang disediakan adalah terurut. Selain itu \emph{splitting} data dilakukan dengan cara membagi data dengan perbandingan yang telah ditentukan. Oleh karena itu, perlu dibuatkan method untuk mengacak data sebelum dilakukannya klasifikasi data testing.
+	\section*{Kesimpulan dan Saran}
+	Berdasarkan hasil pengujian, kesimpulan yang didapatkan yaitu :
+	\begin{itemize}
+		\item Algoritma \emph{Na\"{i}ve Bayes Classifier} memiliki keakuratan yang cukup baik dengan implementasi yang tidak terlalu sulit.
+		\item Urutan data berpengaruh terhadap nilai akurasi.
+		\item Nilai akurasi bersifat fluktuatif dengan kisaran rata-rata yaitu antara 80\% hingga 90\%.
+		\item Perbandingan ukuran data training dan data testing mempengaruhi nilai akurasi.
+	\end{itemize}
+	Adapun saran dari hasil pengujian ini antara lain :
+	\begin{itemize}
+		\item Diperlukan kajian untuk mencari fungsi acak yang menghasilkan nilai akurasi optimal.
+		\item Dilakukan klasifikasi dengan metode lain (optimasi algoritma \emph{Na\"{i}ve Bayes Classifier}).
+		\item Dilakukan testcase yang lebih banyak agar hasil kajian akurat.
+	\end{itemize}
+	\section*{Lampiran}
+	\begin{itemize}
+		\item kode sumber dapat diunduh di https://github.com/rizkidoank/tugasbesar.
+		\item \emph{screenshot} hasil testcase dapat diunduh di alamat github diatas.
+	\end{itemize}
+	\nocite{*}
+	\bibliographystyle{IEEEtran}
 	\bibliography{referensi}
 \end{document}
