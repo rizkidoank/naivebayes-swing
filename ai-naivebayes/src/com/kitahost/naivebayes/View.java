@@ -368,6 +368,7 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		}
 		else if (source==this.mntmReadFromDatabase) {
 			this.controller.readFromDB();
+			this.controller.loadTable(this.sliderDataTesting.getValue());
 		}
 	}
 	

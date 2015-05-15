@@ -2,33 +2,55 @@ package com.kitahost.naivebayes;
 
 import javax.swing.JOptionPane;
 
-import org.bson.Document;
-
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database{
-	private MongoClient client;
-	private MongoDatabase database;
-	private MongoCollection<Document> collection;
+	Connection connect=null;
+	Statement statement=null;
 	
-	public Database(String host, String database,String collection) {
-		this.client = new MongoClient(host,27017);
-		this.database = this.client.getDatabase(database);
-		this.collection = this.database.getCollection(collection);
+	public Database(String host, String user, String pass, String db){
+		try {
+			connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?"
+					+ "user="+user+"&password="+pass);
+			statement = connect.createStatement();
+			this.createTable();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createTable(){
+		try {
+			String sqlAttributes = "CREATE TABLE IF NOT EXISTS header " +
+                   "(header varchar(255),"
+                   + "value varchar(255))";
+			String sqlData = "CREATE TABLE IF NOT EXISTS data ("
+					+ "`buying` varchar(255),"
+					+ "`maint` varchar(255),"
+					+ "`doors` varchar(255),"
+					+ "`persons` varchar(255),"
+					+ "`lug_boot` varchar(255),"
+					+ "`safety` varchar(255),"
+					+ "`acceptability` varchar(255)"
+					+ ")";
+			statement.execute(sqlAttributes);
+			System.out.println(sqlData);
+			statement.execute(sqlData);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public MongoClient getClient() {
-		return client;
+	public Connection getConnect() {
+		return connect;
 	}
 
-	public MongoDatabase getDatabase() {
-		return database;
+	public Statement getStatement() {
+		return statement;
 	}
-
-	public MongoCollection<Document> getCollection() {
-		return collection;
-	}
+	
 	
 }

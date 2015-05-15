@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import org.bson.Document;
 
 public class Model {
 	private Map<String, String[]> attributes;
@@ -21,7 +20,7 @@ public class Model {
 		this.attributes = new HashMap<String, String[]>();
 		this.header = new ArrayList<String>();
 		this.data = new ArrayList<String[]>();
-		this.db = new Database("localhost", "dataset", "car");	
+		this.db = new Database("localhost", "root", "rizkidoank", "car");
 	}
 	
 	public int getNumTraining() {

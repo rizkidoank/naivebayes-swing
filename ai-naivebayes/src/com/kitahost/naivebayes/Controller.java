@@ -4,19 +4,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
-import org.bson.Document;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import com.sun.javafx.collections.MappingChange.Map;
 
 public class Controller{
 	private final View view;
@@ -206,35 +205,46 @@ public class Controller{
 	}
 	
 	public void saveToDB(){
-		List<DBObject> dataset = new ArrayList<>();
-		dataset.add(this.model.getHeader());
+		try {
+			for (String header : this.model.getHeader()) {
+				String attrval = "";
+				for (String value : this.model.getAttributes().get(header)) {
+					attrval = attrval + value +",";
+				}
+				attrval = attrval.substring(0,attrval.length()-1);
+				this.model.getDb().getStatement().execute("INSERT INTO `car`.`header` (`header`,`value`) values('"+header+"','"+attrval+"')");
+			}
+			for (int i = 0; i < this.model.getData().size(); i++) {
+				this.model.getDb().getStatement().execute(
+						"INSERT INTO `car`.`data` (`buying`,`maint`,`doors`,`persons`,`lug_boot`,`safety`,`acceptability`) values('"+ this.model.getData().get(i)[0] +"','"+ this.model.getData().get(i)[1] +"','"+ this.model.getData().get(i)[2] +"','"+ this.model.getData().get(i)[3] +"','"+ this.model.getData().get(i)[4] +"','"+ this.model.getData().get(i)[5] +"','"+ this.model.getData().get(i)[6] +"')"
+				);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void readFromDB(){
-		for (Document doc : this.model.getDb().getCollection().find()) {
-			
-		}
-	}
-}
-
-class saveToDB extends SwingWorker<Boolean, Void>{
-	private Model model;
-    public saveToDB(Model model) {
-		this.model = model;
-	}
-	@Override
-	protected Boolean doInBackground() throws Exception {
-		this.model.getDb().getCollection().drop();
-		List<Document> documents = new ArrayList<Document>();
-		for (String[] data: this.model.getData()) {
-			Document bsonData = new Document(this.model.getHeader().get(0),data[0]);
-			for (int i = 1; i < data.length; i++) {
-				bsonData.append(this.model.getHeader().get(i), data[i]);
+		ResultSet rs;
+		try {
+			this.model = new Model();
+			rs = this.model.getDb().getStatement().executeQuery("select * from car.header");
+			while (rs.next()){
+				this.model.getHeader().add(rs.getString("header"));
+				this.model.getAttributes().put(
+						rs.getString("header"),
+						rs.getString("value").toLowerCase().split(",")
+				);
 			}
-			documents.add(bsonData);
+			rs = this.model.getDb().getStatement().executeQuery("select * from car.data");
+			while (rs.next()) {
+				String data = rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3) + "," + rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6) + "," + rs.getString(7);
+				this.model.getData().add(data.split(","));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		this.model.getDb().getCollection().insertMany(documents);
-		return null;
+		
 	}
-	
 }
