@@ -305,8 +305,6 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 	public void registerObserver(Controller controller){
 		this.controller = controller;
 	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source==this.mntmExit) {
@@ -376,7 +374,6 @@ public class View extends JFrame implements ActionListener,ChangeListener{
 		return sliderDataTesting;
 	}
 
-	@Override
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
 		if (source==this.sliderDataTesting) {

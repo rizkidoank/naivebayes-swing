@@ -1,29 +1,29 @@
 package com.kitahost.naivebayes;
 
-import javax.swing.JOptionPane;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class Database{
-	Connection connect=null;
-	Statement statement=null;
+	private Connection connect=null;
+	private Statement statement=null;
 	
 	public Database(String host, String user, String pass, String db){
 		try {
-			connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?"
+			this.connect = DriverManager.getConnection("jdbc:mysql://"+host+"/"+db+"?"
 					+ "user="+user+"&password="+pass);
-			statement = connect.createStatement();
-			this.createTable();
+			this.statement = connect.createStatement();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,"Connection failed!\nPlease configure database in source (Model.java).","Error",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
 	public void createTable(){
 		try {
+			this.statement.execute("DROP TABLE IF EXISTS `data`,`header`");
 			String sqlAttributes = "CREATE TABLE IF NOT EXISTS header " +
                    "(header varchar(255),"
                    + "value varchar(255))";
@@ -37,7 +37,6 @@ public class Database{
 					+ "`acceptability` varchar(255)"
 					+ ")";
 			statement.execute(sqlAttributes);
-			System.out.println(sqlData);
 			statement.execute(sqlData);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -4,18 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
-
-import com.sun.javafx.collections.MappingChange.Map;
 
 public class Controller{
 	private final View view;
@@ -205,29 +199,19 @@ public class Controller{
 	}
 	
 	public void saveToDB(){
-		try {
-			for (String header : this.model.getHeader()) {
-				String attrval = "";
-				for (String value : this.model.getAttributes().get(header)) {
-					attrval = attrval + value +",";
-				}
-				attrval = attrval.substring(0,attrval.length()-1);
-				this.model.getDb().getStatement().execute("INSERT INTO `car`.`header` (`header`,`value`) values('"+header+"','"+attrval+"')");
-			}
-			for (int i = 0; i < this.model.getData().size(); i++) {
-				this.model.getDb().getStatement().execute(
-						"INSERT INTO `car`.`data` (`buying`,`maint`,`doors`,`persons`,`lug_boot`,`safety`,`acceptability`) values('"+ this.model.getData().get(i)[0] +"','"+ this.model.getData().get(i)[1] +"','"+ this.model.getData().get(i)[2] +"','"+ this.model.getData().get(i)[3] +"','"+ this.model.getData().get(i)[4] +"','"+ this.model.getData().get(i)[5] +"','"+ this.model.getData().get(i)[6] +"')"
-				);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (this.model.getData().size()!=0) {
+			this.view.getTextAreaOutput().setText("Insert to database may take a long time.\n" +
+					"confirmation window will popup when action finished.\n" +
+					"please don't do anything while inserting database (it may cause data loaded partially).");
+			ModelWorker modelworker = new ModelWorker(this.model);
+			modelworker.execute();
 		}
 	}
 	
 	public void readFromDB(){
 		ResultSet rs;
+		this.model.clearModel();
 		try {
-			this.model = new Model();
 			rs = this.model.getDb().getStatement().executeQuery("select * from car.header");
 			while (rs.next()){
 				this.model.getHeader().add(rs.getString("header"));

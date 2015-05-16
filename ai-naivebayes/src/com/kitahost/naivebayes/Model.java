@@ -2,11 +2,7 @@ package com.kitahost.naivebayes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.swing.JOptionPane;
-
 
 public class Model {
 	private Map<String, String[]> attributes;
@@ -21,6 +17,11 @@ public class Model {
 		this.header = new ArrayList<String>();
 		this.data = new ArrayList<String[]>();
 		this.db = new Database("localhost", "root", "rizkidoank", "car");
+	}
+	public void clearModel(){
+		this.attributes = new HashMap<String, String[]>();
+		this.header = new ArrayList<String>();
+		this.data = new ArrayList<String[]>();
 	}
 	
 	public int getNumTraining() {
@@ -70,6 +71,6 @@ public class Model {
 	public Database getDb() {
 		return db;
 	}
-	
+
 	
 }
